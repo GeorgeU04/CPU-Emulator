@@ -32,17 +32,24 @@ void reset(CPU *cpu) {
   cpu->X = 0;
   cpu->Y = 0;
   cpu->cycles = 0;
-  memset(cpu->memory, 0, 65536);
+}
+
+void initializeMemory(CPU *cpu) {
+  memset(cpu->memory, 0, 0x0800);
+  cpu->memory[0xFFFC] = 0x00; // Low byte of reset vector
+  cpu->memory[0xFFFD] = 0x06; // High byte of reset vecto}
 }
 
 void run(CPU *cpu) {
   initInstructionTable();
-  while (cpu->cycles < 3) {
+  while (1) {
     if (cpu->PC < 0x0000 || cpu->PC > 0xFFFF) {
       fprintf(stderr, "PC out of bounds: %04X\n", cpu->PC);
       exit(EXIT_FAILURE);
     }
     uint8_t opcode = readMemory(cpu, cpu->PC++);
+    if (opcode == 0)
+      break;
     executeInstruction(cpu, opcode);
     printf("Accumulator: %" PRIu8 "\n", cpu->A);
     printf("X: %" PRIu8 "\n", cpu->X);

@@ -28,8 +28,8 @@ typedef struct {
 
 uint8_t readMemory(CPU *cpu, uint16_t address);
 void writeMemory(CPU *cpu, uint16_t address, uint8_t value);
+void initializeMemory(CPU *cpu);
 void reset(CPU *cpu);
 void run(CPU *cpu);
 void executeInstruction(CPU *cpu, uint8_t opcode);
-void toggleFlags(CPU *cpu, uint8_t flags);
 #endif
