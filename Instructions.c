@@ -515,6 +515,42 @@ void adcAbsoluteY(CPU *cpu) { return; }
 void adcIndirectX(CPU *cpu) { return; }
 void adcIndirectY(CPU *cpu) { return; }
 
+void andImmediate(CPU *cpu) { return; }
+void andZeroPage(CPU *cpu) { return; }
+void andZeroPageX(CPU *cpu) { return; }
+void andAbsolute(CPU *cpu) { return; }
+void andAbsoluteX(CPU *cpu) { return; }
+void andAbsoluteY(CPU *cpu) { return; }
+void andIndirectX(CPU *cpu) { return; }
+void andIndirectY(CPU *cpu) { return; }
+
+void aslAccumulator(CPU *cpu) { return; }
+void aslZeroPage(CPU *cpu) { return; }
+void aslZeroPageX(CPU *cpu) { return; }
+void aslAbsolute(CPU *cpu) { return; }
+void aslAbsoluteX(CPU *cpu) { return; }
+
+void bcc(CPU *cpu) { return; }
+
+void bcs(CPU *cpu) { return; }
+
+void beq(CPU *cpu) { return; }
+
+void bitZeroPage(CPU *cpu) { return; }
+void bitAbsolute(CPU *cpu) { return; }
+
+void bmi(CPU *cpu) { return; }
+
+void bne(CPU *cpu) { return; }
+
+void bpl(CPU *cpu) { return; }
+
+void brk(CPU *cpu) { return; }
+
+void bvc(CPU *cpu) { return; }
+
+void bvs(CPU *cpu) { return; }
+
 void cmpImmediate(CPU *cpu) { return; }
 void cmpZeroPage(CPU *cpu) { return; }
 void cmpZeroPageX(CPU *cpu) { return; }
@@ -540,6 +576,7 @@ void eorAbsoluteX(CPU *cpu) { return; }
 void eorAbsoluteY(CPU *cpu) { return; }
 void eorIndirectX(CPU *cpu) { return; }
 void eorIndirectY(CPU *cpu) { return; }
+
 void jmpAbsolute(CPU *cpu) { return; }
 void jmpIndirect(CPU *cpu) { return; }
 
@@ -615,14 +652,14 @@ void styZeroPage(CPU *cpu) { return; }
 void styZeroPageX(CPU *cpu) { return; }
 void styAbsolute(CPU *cpu) { return; }
 
-void tax(CPU *cpu);
+void tax(CPU *cpu) { return; }
 
-void tay(CPU *cpu);
+void tay(CPU *cpu) { return; }
 
-void tsx(CPU *cpu);
+void tsx(CPU *cpu) { return; }
 
-void txa(CPU *cpu);
+void txa(CPU *cpu) { return; }
 
-void txs(CPU *cpu);
+void txs(CPU *cpu) { return; }
 
-void tya(CPU *cpu);
+void tya(CPU *cpu) { return; }
