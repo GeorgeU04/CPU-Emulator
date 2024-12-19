@@ -17,7 +17,6 @@ void parseASMCode(CPU *cpu) {
     exit(EXIT_FAILURE);
   }
   int64_t size = st.st_size;
-  printf("Size: %" PRId64 "\n", size);
   if (size > 0 && size <= 65536) {
     if (fread(cpu->memory + 0x0600, 1, size, file) != size) {
       fprintf(stderr, "[ERROR]: Could not write to memory\n");
