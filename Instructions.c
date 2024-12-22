@@ -313,7 +313,7 @@ void initInstructionTable() {
 
   // STY - Store Y Register
   instructionTable[0x84] = (Instruction){"STY", styZeroPage, 3, ZeroPage};
-  instructionTable[0x95] =
+  instructionTable[0x94] =
       (Instruction){"STY", styZeroPageX, 4, ZeroPageXIndexed};
   instructionTable[0x8C] = (Instruction){"STY", styAbsolute, 4, Absolute};
 
@@ -333,5 +333,5 @@ void initInstructionTable() {
   instructionTable[0x9A] = (Instruction){"TXS", txs, 2, Implied};
 
   // TYA - Transfer Y to Accumulator
-  instructionTable[0x8A] = (Instruction){"TYA", tya, 2, Implied};
+  instructionTable[0x98] = (Instruction){"TYA", tya, 2, Implied};
 }

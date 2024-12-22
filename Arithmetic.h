@@ -47,4 +47,4 @@ void sbcAbsoluteY(CPU *cpu);
 void sbcIndirectX(CPU *cpu);
 void sbcIndirectY(CPU *cpu);
 
-#endif
+#endif // !ARITHMETIC_H

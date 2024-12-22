@@ -8,6 +8,20 @@
 
 char flags[] = {'C', 'Z', 'I', 'D', 'B', ' ', 'V', 'N'};
 
+char *adressModes[] = {"Implied",
+                       "Immediate",
+                       "Absolute",
+                       "Absolute X Indexed",
+                       "Absolute Y Indexed",
+                       "Zero Page",
+                       "ZeroPage X Indexed",
+                       "ZeroPage Y Indexed",
+                       "Indirect",
+                       "Indirect X Indexed",
+                       "Indirect Y Indexed",
+                       "Relative",
+                       "Accumulator"};
+
 uint8_t readMemory(CPU *cpu, uint16_t address) {
   if (address > 65535) {
     fprintf(stderr, "[ERROR]: Memory Adress Out of Bounds\n");
@@ -51,9 +65,9 @@ void run(CPU *cpu) {
     if (opcode == 0)
       break;
     executeInstruction(cpu, opcode);
-    printf("Accumulator: %" PRIu8 "\n", cpu->A);
-    printf("X: %" PRIu8 "\n", cpu->X);
-    printf("Y: %" PRIu8 "\n", cpu->Y);
+    printf("Accumulator: %" PRIu8 " (0x%02X)\n", cpu->A, cpu->A);
+    printf("X: %" PRIu8 " (0x%02X)\n", cpu->X, cpu->X);
+    printf("Y: %" PRIu8 " (0x%02X)\n", cpu->Y, cpu->Y);
     printf("Cycles: %" PRId64 "\n", cpu->cycles);
     printf("Flags:\n");
     for (int8_t i = 7; i >= 0; --i) {
@@ -64,7 +78,8 @@ void run(CPU *cpu) {
 
 void executeInstruction(CPU *cpu, uint8_t opcode) {
   Instruction instruction = instructionTable[opcode];
-  printf("Executing %s (0x%02X)\n", instruction.name, opcode);
+  printf("Executing %s (0x%02X) Mode: %s\n", instruction.name, opcode,
+         adressModes[instruction.mode]);
   if (instruction.handler) {
     instruction.handler(cpu);
     cpu->cycles += instruction.cycles;
