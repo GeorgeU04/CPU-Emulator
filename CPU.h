@@ -15,7 +15,7 @@
  *  N = Negative
  */
 
-typedef struct {
+typedef struct CPU {
   uint16_t PC;           // Program Counter
   uint8_t A;             // Accumulator
   uint8_t X;             // Register X

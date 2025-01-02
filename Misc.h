@@ -3,8 +3,8 @@
 #include "CPU.h"
 
 // BIT - Test Bits
-void bitZeroPage(CPU *cpu);
-void bitAbsolute(CPU *cpu);
+void bitZeroPage(CPU *cpu); // done
+void bitAbsolute(CPU *cpu); // done
 
 // CLC - Clear Carry Flag
 void clc(CPU *cpu); // done

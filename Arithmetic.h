@@ -4,14 +4,14 @@
 #include "CPU.h"
 
 // ADC - Add with Carry
-void adcImmediate(CPU *cpu);
-void adcZeroPage(CPU *cpu);
-void adcZeroPageX(CPU *cpu);
-void adcAbsolute(CPU *cpu);
-void adcAbsoluteX(CPU *cpu);
-void adcAbsoluteY(CPU *cpu);
-void adcIndirectX(CPU *cpu);
-void adcIndirectY(CPU *cpu);
+void adcImmediate(CPU *cpu); // done
+void adcZeroPage(CPU *cpu);  // done
+void adcZeroPageX(CPU *cpu); // done
+void adcAbsolute(CPU *cpu);  // done
+void adcAbsoluteX(CPU *cpu); // done
+void adcAbsoluteY(CPU *cpu); // done
+void adcIndirectX(CPU *cpu); // done
+void adcIndirectY(CPU *cpu); // done
 
 // DEC - Decrement Memory
 void decZeroPage(CPU *cpu);  // done
@@ -38,13 +38,13 @@ void incX(CPU *cpu); // done
 void incY(CPU *cpu); // done
 
 // SBC - Subtract with Carry
-void sbcImmediate(CPU *cpu);
-void sbcZeroPage(CPU *cpu);
-void sbcZeroPageX(CPU *cpu);
-void sbcAbsolute(CPU *cpu);
-void sbcAbsoluteX(CPU *cpu);
-void sbcAbsoluteY(CPU *cpu);
-void sbcIndirectX(CPU *cpu);
-void sbcIndirectY(CPU *cpu);
+void sbcImmediate(CPU *cpu); // done
+void sbcZeroPage(CPU *cpu);  // done
+void sbcZeroPageX(CPU *cpu); // done
+void sbcAbsolute(CPU *cpu);  // done
+void sbcAbsoluteX(CPU *cpu); // done
+void sbcAbsoluteY(CPU *cpu); // done
+void sbcIndirectX(CPU *cpu); // done
+void sbcIndirectY(CPU *cpu); // done
 
 #endif // !ARITHMETIC_H

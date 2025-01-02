@@ -38,8 +38,8 @@ void ldaAbsoluteX(CPU *cpu) {
   uint8_t lowByte = readMemory(cpu, cpu->PC++);
   uint8_t highByte = readMemory(cpu, cpu->PC++);
   uint16_t fullAddress = (highByte << 8) | lowByte;
-  uint16_t indexAAddress = fullAddress + cpu->X;
-  if ((fullAddress >> 8) != (indexAAddress >> 8)) {
+  uint16_t indexAddress = fullAddress + cpu->X;
+  if ((fullAddress >> 8) != (indexAddress >> 8)) {
     cpu->cycles++;
   }
   cpu->A = readMemory(cpu, fullAddress);
@@ -51,8 +51,8 @@ void ldaAbsoluteY(CPU *cpu) {
   uint8_t lowByte = readMemory(cpu, cpu->PC++);
   uint8_t highByte = readMemory(cpu, cpu->PC++);
   uint16_t fullAddress = (highByte << 8) | lowByte;
-  uint16_t indexAAddress = fullAddress + cpu->Y;
-  if ((fullAddress >> 8) != (indexAAddress >> 8)) {
+  uint16_t indexAddress = fullAddress + cpu->Y;
+  if ((fullAddress >> 8) != (indexAddress >> 8)) {
     cpu->cycles++;
   }
   cpu->A = readMemory(cpu, fullAddress);
@@ -61,7 +61,7 @@ void ldaAbsoluteY(CPU *cpu) {
 }
 
 void ldaIndirectX(CPU *cpu) {
-  uint8_t indexAddress = readMemory(cpu, cpu->PC++) + cpu->X;
+  uint16_t indexAddress = readMemory(cpu, cpu->PC++) + cpu->X;
   if (indexAddress > 0xFF) {
     indexAddress &= 0xFF;
   }
@@ -74,15 +74,15 @@ void ldaIndirectX(CPU *cpu) {
 }
 
 void ldaIndirectY(CPU *cpu) {
-  uint8_t indexAddress = readMemory(cpu, cpu->PC++);
-  uint8_t lowByte = readMemory(cpu, indexAddress);
-  uint8_t highByte = readMemory(cpu, indexAddress + 1);
+  uint8_t Address = readMemory(cpu, cpu->PC++);
+  uint8_t lowByte = readMemory(cpu, Address);
+  uint8_t highByte = readMemory(cpu, Address + 1);
   uint16_t fullAddress = (highByte << 8) | lowByte;
-  fullAddress += cpu->Y;
+  uint16_t indexAddress = fullAddress + cpu->Y;
   if ((fullAddress >> 8) != (indexAddress >> 8)) {
     cpu->cycles++;
   }
-  cpu->A = readMemory(cpu, fullAddress);
+  cpu->A = readMemory(cpu, indexAddress);
   cpu->P &= ~((1 << 1) | (1 << 7));
   cpu->P |= ((cpu->A == 0) << 1) | (((cpu->A >> 7) & 1) << 7);
 }
@@ -181,7 +181,7 @@ void staZeroPage(CPU *cpu) {
 }
 
 void staZeroPageX(CPU *cpu) {
-  uint8_t indexAddress = readMemory(cpu, cpu->PC++) + cpu->X;
+  uint16_t indexAddress = readMemory(cpu, cpu->PC++) + cpu->X;
   if (indexAddress > 0xFF) {
     indexAddress &= 0xFF;
   }
@@ -237,7 +237,7 @@ void stxZeroPage(CPU *cpu) {
 }
 
 void stxZeroPageY(CPU *cpu) {
-  uint8_t indexAddress = readMemory(cpu, cpu->PC++) + cpu->Y;
+  uint16_t indexAddress = readMemory(cpu, cpu->PC++) + cpu->Y;
   if (indexAddress > 0xFF) {
     indexAddress &= 0xFF;
   }
@@ -257,7 +257,7 @@ void styZeroPage(CPU *cpu) {
 }
 
 void styZeroPageX(CPU *cpu) {
-  uint8_t indexAddress = readMemory(cpu, cpu->PC++) + cpu->X;
+  uint16_t indexAddress = readMemory(cpu, cpu->PC++) + cpu->X;
   if (indexAddress > 0xFF) {
     indexAddress &= 0xFF;
   }

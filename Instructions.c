@@ -24,10 +24,14 @@ void initInstructionTable() {
   instructionTable[0xB5] =
       (Instruction){"LDA", ldaZeroPageX, 4, ZeroPageXIndexed};
   instructionTable[0xAD] = (Instruction){"LDA", ldaAbsolute, 4, Absolute};
-  instructionTable[0xBD] = (Instruction){"LDA", ldaAbsoluteX, 4, Absolute};
-  instructionTable[0xB9] = (Instruction){"LDA", ldaAbsoluteY, 4, Absolute};
-  instructionTable[0xA1] = (Instruction){"LDA", ldaIndirectX, 6, Absolute};
-  instructionTable[0xB1] = (Instruction){"LDA", ldaIndirectY, 5, Absolute};
+  instructionTable[0xBD] =
+      (Instruction){"LDA", ldaAbsoluteX, 4, AbsoluteXIndexed};
+  instructionTable[0xB9] =
+      (Instruction){"LDA", ldaAbsoluteY, 4, AbsoluteYIndexed};
+  instructionTable[0xA1] =
+      (Instruction){"LDA", ldaIndirectX, 6, IndirectXIndexed};
+  instructionTable[0xB1] =
+      (Instruction){"LDA", ldaIndirectY, 5, IndirectYIndexed};
 
   // CLC - Clear Carry Flag
   instructionTable[0x18] = (Instruction){"CLC", clc, 2, Implied};
