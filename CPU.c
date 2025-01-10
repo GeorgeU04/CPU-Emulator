@@ -40,8 +40,8 @@ void writeMemory(CPU *cpu, uint16_t address, uint8_t value) {
 
 void reset(CPU *cpu) {
   cpu->PC = readMemory(cpu, 0xFFFC) | (readMemory(cpu, 0xFFFD) << 8);
-  cpu->P = 0b00110100;
-  cpu->SP = 0xFD;
+  cpu->P = 0b00100000;
+  cpu->SP = 0xFF;
   cpu->A = 0;
   cpu->X = 0;
   cpu->Y = 0;
@@ -69,6 +69,8 @@ void run(CPU *cpu) {
     printf("X: %" PRIu8 " (0x%02X)\n", cpu->X, cpu->X);
     printf("Y: %" PRIu8 " (0x%02X)\n", cpu->Y, cpu->Y);
     printf("Cycles: %" PRId64 "\n", cpu->cycles);
+    printf("Program Counter: %" PRIu16 " (0x%02X)\n", cpu->PC, cpu->PC);
+    printf("Stack Pointer: %" PRIu16 " (0x%02X)\n", cpu->SP, cpu->SP);
     printf("Flags:\n");
     for (int8_t i = 7; i >= 0; --i) {
       printf("%c %" PRIu8 "\n", flags[i], (cpu->P >> i) & 1);

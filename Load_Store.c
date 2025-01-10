@@ -74,9 +74,9 @@ void ldaIndirectX(CPU *cpu) {
 }
 
 void ldaIndirectY(CPU *cpu) {
-  uint8_t Address = readMemory(cpu, cpu->PC++);
-  uint8_t lowByte = readMemory(cpu, Address);
-  uint8_t highByte = readMemory(cpu, Address + 1);
+  uint8_t address = readMemory(cpu, cpu->PC++);
+  uint8_t lowByte = readMemory(cpu, address);
+  uint8_t highByte = readMemory(cpu, address + 1);
   uint16_t fullAddress = (highByte << 8) | lowByte;
   uint16_t indexAddress = fullAddress + cpu->Y;
   if ((fullAddress >> 8) != (indexAddress >> 8)) {

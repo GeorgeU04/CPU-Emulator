@@ -1,28 +1,83 @@
 #include "Branching.h"
+#include "CPU.h"
+#include <stdint.h>
 
-void bcc(CPU *cpu) { return; }
+void branchGeneral(CPU *cpu, uint8_t condition) {
+  if (condition) {
+    cpu->cycles++;
+    int8_t offset = readMemory(cpu, cpu->PC++);
+    uint16_t oldPC = cpu->PC;
+    cpu->PC += offset;
+    if ((cpu->PC >> 8) != (oldPC >> 8))
+      cpu->cycles++;
+  }
+}
 
-void bcs(CPU *cpu) { return; }
+void bcc(CPU *cpu) { branchGeneral(cpu, ((cpu->P & 1) == 0)); }
 
-void beq(CPU *cpu) { return; }
+void bcs(CPU *cpu) { branchGeneral(cpu, (cpu->P & 1)); }
 
-void bmi(CPU *cpu) { return; }
+void beq(CPU *cpu) { branchGeneral(cpu, ((cpu->P >> 1) & 1)); }
 
-void bne(CPU *cpu) { return; }
+void bne(CPU *cpu) { branchGeneral(cpu, (((cpu->P >> 1) & 1) == 0)); }
 
-void bpl(CPU *cpu) { return; }
+void bmi(CPU *cpu) { branchGeneral(cpu, ((cpu->P >> 7) & 1)); }
 
-void brk(CPU *cpu) { return; }
+void bpl(CPU *cpu) { branchGeneral(cpu, (((cpu->P >> 7) & 1) == 0)); }
 
-void bvc(CPU *cpu) { return; }
+void brk(CPU *cpu) {
+  cpu->P |= (1 << 4);
+  writeMemory(cpu, 0x0100 + cpu->SP--, (cpu->PC >> 8));
+  writeMemory(cpu, 0x0100 + cpu->SP--, cpu->PC);
+  writeMemory(cpu, 0x0100 + cpu->SP--, cpu->P);
+  cpu->P |= (1 << 2);
+  uint8_t lowByte = readMemory(cpu, 0xFFFE);
+  uint8_t highByte = readMemory(cpu, 0xFFFF);
+  cpu->PC = (highByte << 8) | lowByte;
+}
 
-void bvs(CPU *cpu) { return; }
+void bvs(CPU *cpu) { branchGeneral(cpu, ((cpu->P >> 6) & 1)); }
 
-void jmpAbsolute(CPU *cpu) { return; }
-void jmpIndirect(CPU *cpu) { return; }
+void bvc(CPU *cpu) { branchGeneral(cpu, (((cpu->P >> 6) & 1) == 0)); }
 
-void jsr(CPU *cpu) { return; }
+void jmpAbsolute(CPU *cpu) {
+  uint8_t lowByte = readMemory(cpu, cpu->PC++);
+  uint8_t highByte = readMemory(cpu, cpu->PC++);
+  uint16_t fullAddress = (highByte << 8) | lowByte;
+  cpu->PC = fullAddress;
+}
 
-void rti(CPU *cpu) { return; }
+void jmpIndirect(CPU *cpu) {
+  uint8_t lowPointer = readMemory(cpu, cpu->PC++);
+  uint8_t highPointer = readMemory(cpu, cpu->PC++);
+  uint16_t pointer = (highPointer << 8) | lowPointer;
+  uint8_t lowByte = readMemory(cpu, pointer);
+  uint8_t highByte = readMemory(
+      cpu, (pointer & 0xFF00) | ((pointer + 1) & 0x00FF)); // Wraparound bug
+  uint16_t fullAddress = (highByte << 8) | lowByte;
+  cpu->PC = fullAddress;
+}
 
-void rts(CPU *cpu) { return; }
+void jsr(CPU *cpu) {
+  uint8_t lowByte = readMemory(cpu, cpu->PC++);
+  uint8_t highByte = readMemory(cpu, cpu->PC++);
+  uint16_t fullAddress = (highByte << 8) | lowByte;
+  uint16_t returnAddress = cpu->PC - 1;
+  writeMemory(cpu, 0x0100 + cpu->SP--, (returnAddress >> 8) & 0xFF);
+  writeMemory(cpu, 0x0100 + cpu->SP--, returnAddress & 0xFF);
+  cpu->PC = fullAddress;
+}
+
+void rti(CPU *cpu) {
+  cpu->P = readMemory(cpu, ++cpu->SP) & 0xCF;
+  uint8_t lowByte = readMemory(cpu, 0x0100 + ++cpu->SP);
+  uint8_t highByte = readMemory(cpu, 0x0100 + ++cpu->SP);
+  cpu->PC = (highByte << 8) | lowByte;
+}
+
+void rts(CPU *cpu) {
+  uint8_t lowByte = readMemory(cpu, 0x0100 + ++cpu->SP);
+  uint8_t highByte = readMemory(cpu, 0x0100 + ++cpu->SP);
+  cpu->PC = (highByte << 8) | lowByte;
+  cpu->PC++;
+}

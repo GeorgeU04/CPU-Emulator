@@ -3,23 +3,23 @@
 #include "CPU.h"
 
 // CMP - Compare
-void cmpImmediate(CPU *cpu);
-void cmpZeroPage(CPU *cpu);
-void cmpZeroPageX(CPU *cpu);
-void cmpAbsolute(CPU *cpu);
-void cmpAbsoluteX(CPU *cpu);
-void cmpAbsoluteY(CPU *cpu);
-void cmpIndirectX(CPU *cpu);
-void cmpIndirectY(CPU *cpu);
+void cmpImmediate(CPU *cpu); // done
+void cmpZeroPage(CPU *cpu);  // done
+void cmpZeroPageX(CPU *cpu); // done
+void cmpAbsolute(CPU *cpu);  // done
+void cmpAbsoluteX(CPU *cpu); // done
+void cmpAbsoluteY(CPU *cpu); // done
+void cmpIndirectX(CPU *cpu); // done
+void cmpIndirectY(CPU *cpu); // done
 
 // CPX - Compare X Register
-void cpxImmediate(CPU *cpu);
-void cpxZeroPage(CPU *cpu);
-void cpxAbsolute(CPU *cpu);
+void cpxImmediate(CPU *cpu); // done
+void cpxZeroPage(CPU *cpu);  // done
+void cpxAbsolute(CPU *cpu);  // done
 
 // CPY - Compare Y Register
-void cpyImmediate(CPU *cpu);
-void cpyZeroPage(CPU *cpu);
-void cpyAbsolute(CPU *cpu);
+void cpyImmediate(CPU *cpu); // done
+void cpyZeroPage(CPU *cpu);  // done
+void cpyAbsolute(CPU *cpu);  // done
 
 #endif // !COMPARE_H
